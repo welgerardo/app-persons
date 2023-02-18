@@ -1,2 +1,2 @@
 # app-persons
-application to manage people p
+application to manage people

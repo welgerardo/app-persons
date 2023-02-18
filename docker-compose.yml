@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  php:
+    container_name: php_person
+    build:
+      dockerfile: .docker/php/Dockerfile
+    ports:
+      - '9002:9001'
+    volumes:
+      - .:/var/www/app
+  nginx:
+    container_name: nginx_timeline
+    image: nginx:stable-alpine
+    ports:
+      - '9092:80'
+    volumes:
+      - .:/var/www/app
+      - ./.docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+  database:
+    container_name: database
+    image: mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: database
+      MYSQL_USER: user
+      MYSQL_PASSWORD: secret
+    ports:
+      - '${DATABASE_PORT:-4306}:3306'
+    volumes:
+      - ./.docker/database:/var/lib/mysql

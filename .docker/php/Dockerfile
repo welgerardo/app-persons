@@ -8,6 +8,6 @@ RUN apt update \
     && docker-php-ext-configure zip \
     && docker-php-ext-install zip
 
-COPY php.ini /usr/local/etc/php/conf.d/php-dev.ini
+#COPY php.ini /usr/local/etc/php/conf.d/php-dev.ini
 
 WORKDIR /var/www/app

@@ -2,124 +2,80 @@
 
 namespace App\Entity;
 
+use App\Repository\PersonRepository;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity(repositoryClass: PersonRepository::class)]
 class Person
 {
-    private string $id;
-    private string $firstName;
-    private ?string $lastName   = null;
-    private ?string $middleName = null;
-    private ?string $address     = null;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    #region id
-    /**
-     * @param string $value
-     * @return boolean
-     */
-    public function setId(string $value) : bool
-    {
-        $this->id = $value;
+    #[ORM\Column(length: 255)]
+    private ?string $firstName = null;
 
-        return true;
-    }
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $lastName = null;
 
-    /**
-     * @return string
-     */
-    public function getId() : string
+    #[ORM\Column]
+    private ?int $nif = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $birthday = null;
+
+    public function getId(): ?int
     {
         return $this->id;
     }
-    #endregion id
-    
-    #region first name
-    /**
-     * @param string $value
-     * @return boolean
-     */
-    public function setFirstName(string $value) : bool
-    {
-        $this->firstName = $value;
 
-        return true;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFirstName() : string
+    public function getFirstName(): ?string
     {
         return $this->firstName;
     }
-    #endregion first name
 
-    #region last  name
-    /**
-     * @param string $value
-     * @return boolean
-     */
-    public function setLastName(string $value) : bool
+    public function setFirstName(string $firstName): self
     {
-        $this->lastName = $value;
+        $this->firstName = $firstName;
 
-        return true;
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getLastName() : string
+    public function getLastName(): ?string
     {
         return $this->lastName;
     }
-    #endregion last name
 
-    #region middle name
-    /**
-     * @param string $value
-     * @return boolean
-     */
-    public function setMidlleName(string $value) : bool
+    public function setLastName(?string $lastName): self
     {
-        $this->middleName = $value;
+        $this->lastName = $lastName;
 
-        return true;
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getMiddleName() : string
+    public function getNif(): ?int
     {
-        return $this->middleName;
-    }
-    #endregion first name
-
-    #region address name
-    /**
-     * @param string $value
-     * @return boolean
-     */
-    public function setAddress(string $value) : bool
-    {
-        $this->address = $value;
-
-        return true;
+        return $this->nif;
     }
 
-    
-    /**
-     * @return string
-     */
-    public function getAdress() : string
+    public function setNif(int $nif): self
     {
-        return $this->address;
-    }
-    #endregion adress name
+        $this->nif = $nif;
 
-    #region validation
-    public function isValid()
-    {
-        # code...
+        return $this;
     }
-    #endregion validation
+
+    public function getBirthday(): ?\DateTimeInterface
+    {
+        return $this->birthday;
+    }
+
+    public function setBirthday(?\DateTimeInterface $birthday): self
+    {
+        $this->birthday = $birthday;
+
+        return $this;
+    }
 }

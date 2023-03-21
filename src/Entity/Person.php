@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\PersonRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\PersonRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PersonRepository::class)]
 class Person
@@ -20,7 +21,10 @@ class Person
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $lastName = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true, unique: true)]
+    #[Assert\Type(
+        type: 'integer',
+        message: 'The value {{ value }} is not a valid {{ type }}.')]
     private ?int $nif = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]

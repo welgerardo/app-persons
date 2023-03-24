@@ -2,18 +2,19 @@
 
 namespace App\Request;
 
-use Symfony\Component\HttpFoundation\Request;
+//use App\Request\BaseRequest;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class AddPersonRequest extends BaseRequest
 {
-    public string $firstName;
+    #[Assert\NotBlank(message:"First name is required.")]
+    public string $first_name;
 
-    public ?string $lastName = null;
+    public ?string $last_name = null;
 
-    public ?int $nif = null;
+    #[Assert\Type('string', message:"Invalid value")]
+    public ?string $nif = null;
 
+    #[Assert\DateTime('Y-m-d',message:"Invalid date.")]
     public ?string $birthday = null; 
-
-    
 }

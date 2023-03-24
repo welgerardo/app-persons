@@ -23,11 +23,12 @@ class Person
 
     #[ORM\Column(nullable: true, unique: true)]
     #[Assert\Type(
-        type: 'integer',
+        type: 'string',
         message: 'The value {{ value }} is not a valid {{ type }}.')]
-    private ?int $nif = null;
+    private ?string $nif = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[Assert\DateTime('Y-m-d')]
     private ?\DateTimeInterface $birthday = null;
 
     public function getId(): ?int
@@ -59,12 +60,12 @@ class Person
         return $this;
     }
 
-    public function getNif(): ?int
+    public function getNif(): ?string
     {
         return $this->nif;
     }
 
-    public function setNif(int $nif): self
+    public function setNif(?string $nif): self
     {
         $this->nif = $nif;
 
